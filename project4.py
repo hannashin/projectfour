@@ -35,22 +35,22 @@ student_img = pygame.image.load("student_run.gif")
 #logogame = pygame.image.load("PICTUREOFWHATEVER.png") #or .jpeg
 
 #Game
-#pause = False
+pause = False
 
-# def quitgame():
-#     pygame.quit()
-#     quit() #Quits the game
+def quitgame():
+    pygame.quit()
+    quit() #Quits the game
 
-# def unpause():
-#     global pause
-#     pygame.mixer.music.unpause()
-#     pause = False
+def unpause():
+    global pause
+    pygame.mixer.music.unpause()
+    pause = False
 
-# def paused():
-#     pygame.mixer.music.pause()
+def paused():
+    pygame.mixer.music.pause()
 
 
-#def main():
+def main():
 
 #Animation
 
