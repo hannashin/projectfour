@@ -23,7 +23,7 @@ yellow = (255, 255, 0)
 pygame.display.set_caption('Everyday College')
 
 #Timer
-start = time.time()
+timer = pygame.time.Clock()
 
 #text size
 pygame.font.init()
