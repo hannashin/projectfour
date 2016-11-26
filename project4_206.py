@@ -1,6 +1,8 @@
 #Han Na Shin
 #SI 206 - Project 4 Pygame
 
+#student = 90 pixels
+#avoid images = 70 pixels
 
 from pygame import *
 import time
@@ -32,13 +34,10 @@ pygame.display.set_caption('Trying to Avoid')
 timer = pygame.time.Clock()
 
 #text size
-pygame.font.init()
-text = pygame.font.Font(pygame.font.get_default_font(), 12)
+text = font.Font(None, 32)
 
 #Square Screen
-display_size = display.set_mode((400,600))
-
-pygame.mixer.init()
+display_size = display.set_mode((800,1200))
 
 #Sounds game
 music = pygame.mixer.Sound("media/run_song.wav")
@@ -88,27 +87,41 @@ class Student(Sprite):
 		self.image = image.load("data/student.png").convert()
 		self.rect = self.image.get_rect()
 
-    # def avoided(self, target):
+    # def target(self, target):
     #     return self.rect.colliderect(target)
 
+    # #The shovel sprite will move with the mousepointer
     # def update(self):
     #     self.rect.center = mouse.get_pos()
 
 
-#game code
-# mouse.set_visible(False)
-# snowflake = Snowflake()
-# clocktime = Clocktime()
-# homework = Homework()
-# student = Student()
-# colliders = RenderPlain(snowflake, clocktime, homework, student)
+init()
 
-# hits = 0
+mouse.set_visible(False)
 
-#while True:
+snowflake = Snowflake()
+clock = Clicktime()
+homework = Homework()
+stud = Student()
+sprites = RenderPlain(snowflake, stud)
+
+targeted = 0
+time.set_timer(USEREVENT + 1, DELAY)
+
+while True:
+    e = event.poll()
+    if e.type == QUIT:
+        quit()
+        break
 
 
+    elif e.type == MOUSEBUTTONDOWN:
+        if stud.hit(target):
+            mixer.Sound("media/okay_bye.wav")
+            stud.move()
+            hits += 1
 
+            time.set_timer(USEREVENT + 1, DELAY)
 
 
 
