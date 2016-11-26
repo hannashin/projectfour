@@ -1,6 +1,12 @@
-import pygame
+#Han Na Shin
+#SI 206 - Project 4 Pygame
+
+
+from pygame import *
 import time
-import random
+from pygame.sprite import *
+from random import *
+
 print ("""Having a tough day? Well my friend, we're in college. Avoid all the things coming your way! Good luck and Go Blue!""")
 
 student_name = input("What's your name, student?")
@@ -20,7 +26,7 @@ green = (0, 200, 0)
 yellow = (255, 255, 0)
 
 #Display 
-pygame.display.set_caption('Everyday College')
+pygame.display.set_caption('Trying to Avoid')
 
 #Timer
 timer = pygame.time.Clock()
@@ -28,12 +34,9 @@ timer = pygame.time.Clock()
 #text size
 pygame.font.init()
 text = pygame.font.Font(pygame.font.get_default_font(), 12)
-formeonly= False
 
 #Square Screen
-width_display = 500
-height_display = 500
-screen_display = pygame.display.set_mode(width_display,height_display)
+display_size = display.set_mode((400,600))
 
 pygame.mixer.init()
 
@@ -42,42 +45,71 @@ music = pygame.mixer.Sound("media/run_song.wav")
 weapon = pygame.mixer.Sound("media/ohmygod.wav")
 leaving = pygame.mixer.Sound("media/okay_bye.wav")
 
-#Location and Start
-#Location
-done = False
-position = (0,0)
-pencil = 0
-bn = 0
-score = 0
-
 #Avoiding target images
-avoid_images = ["data/snowflake.png", "data/eight_thirty.png", "data/homework.png"]
 
 #Game Classes:
-class Sprite:
-	def __init__(self, image1 = )
+class Snowflake(Sprite):
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = image.load("data/snowflake.png").convert_alpha()
+        self.rect = self.image.get_rect()
+
+    def placed(self):
+    	x_axis = randint(0,300)
+    	y_axis = randint(0,150)
+    	self.rect.center = (x_axis, y_axis)
+
+class Clocktime(Sprite):
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = image.load("data/eight_thirty.png").convert_alpha()
+        self.rect = self.image.get_rect()
+
+    def placed(self):
+    	x_axis = randint(0,75)
+    	y_axis = randint(0,200)
+    	self.rect.center = (x_axis, y_axis)
+
+class Homework(Sprite):
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = image.load("data/homework.png").convert_alpha()
+        self.rect = self.image.get_rect()
+
+    def placed(self):
+        x_axis = randint(0,100)
+        y_axis = randint(0,100)
+        self.rect.center = (x_axis, y_axis)
 
 
-#Game positioning and screen starting display
+class Student(Sprite):
+	def __init__(self):
+		Sprite.__init__(self)
+		self.image = image.load("data/student.png").convert()
+		self.rect = self.image.get_rect()
+
+    # def avoided(self, target):
+    #     return self.rect.colliderect(target)
+
+    # def update(self):
+    #     self.rect.center = mouse.get_pos()
+
+
+#game code
+# mouse.set_visible(False)
+# snowflake = Snowflake()
+# clocktime = Clocktime()
+# homework = Homework()
+# student = Student()
+# colliders = RenderPlain(snowflake, clocktime, homework, student)
+
+# hits = 0
+
+#while True:
 
 
 
-#Ending of game
-print ("Student:")
-print (student_name)
-print ("Score:")
-print (score)
-print ("Time:")
-print(time.time()-start, "\n")
-pygame.quit()
-ending = None
 
-while ending != "Q":
-	ending = input("Press Q to Quit game:")
-	if ending == "Q":
-		break
-print ("FINISHED GAME")
-quit 
 
 
 
