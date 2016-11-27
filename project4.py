@@ -1,125 +1,129 @@
-#Han Na Shin
-#SI 206 - Project 4 Pygame
-
-#student = 90 pixels
-#avoid images = 70 pixels
+# Han Na Shinst
 
 from pygame import *
-import time
 from pygame.sprite import *
 from random import *
 
-print ("""Having a tough day? Well my friend, we're in college. Avoid all the things coming your way! Good luck and Go Blue!""")
+#Timer to move sprite
+DELAY = 1000;          
 
-student_name = input("What's your name, student?")
-if student_name == "":
-	name = "Hanna Shin"
-
-#Start of Game --- leaving terminal
-
-pygame.init()
-
-#colors
-#Colors
+#Colors 
+backgroundimage = pygame.image.load("media/campus.jpg")
 white = (255,255,255)
 black = (0,0,0)
 red = (200, 0, 0)
 green = (0, 200, 0)
-yellow = (255, 255, 0)
+yellow = (255, 255, 0)   
 
-#Display 
-pygame.display.set_caption('Trying to Avoid')
 
-#Timer
-timer = pygame.time.Clock()
 
-#text size
-text = font.Font(None, 32)
-
-#Square Screen
-display_size = display.set_mode((800,1200))
-
-#Sounds game
-music = pygame.mixer.Sound("media/run_song.wav")
-weapon = pygame.mixer.Sound("media/ohmygod.wav")
-leaving = pygame.mixer.Sound("media/okay_bye.wav")
-
-#Avoiding target images
-
-#Game Classes:
 class Snowflake(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = image.load("data/snowflake.png").convert_alpha()
+        self.image = image.load("media/snowflake.png").convert_alpha()
         self.rect = self.image.get_rect()
 
-    def placed(self):
-    	x_axis = randint(0,300)
-    	y_axis = randint(0,150)
-    	self.rect.center = (x_axis, y_axis)
-
-class Clocktime(Sprite):
-    def __init__(self):
-        Sprite.__init__(self)
-        self.image = image.load("data/eight_thirty.png").convert_alpha()
-        self.rect = self.image.get_rect()
-
-    def placed(self):
-    	x_axis = randint(0,75)
-    	y_axis = randint(0,200)
-    	self.rect.center = (x_axis, y_axis)
+    # move gold to a new random location
+    def move(self):
+        randX = randint(0, 600)
+        randY = randint(0, 400)
+        self.rect.center = (randX,randY)
 
 class Homework(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = image.load("data/homework.png").convert_alpha()
+        self.image = image.load("media/homework.png").convert_alpha()
         self.rect = self.image.get_rect()
 
-    def placed(self):
-        x_axis = randint(0,100)
-        y_axis = randint(0,100)
-        self.rect.center = (x_axis, y_axis)
-
+    # move gold to a new random location
+    def move(self):
+        randX = randint(0, 400)
+        randY = randint(0, 200)
+        self.rect.center = (randX,randY)
 
 class Student(Sprite):
-	def __init__(self):
-		Sprite.__init__(self)
-		self.image = image.load("data/student.png").convert()
-		self.rect = self.image.get_rect()
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = image.load("media/student.png").convert()
+        self.rect = self.image.get_rect()
+        self.image.set_colorkey(black) #makes it transparent
 
-    def target(self, target):
+    # Di shovel/cursor collide the gold?
+    def hit(self, target):
         return self.rect.colliderect(target)
 
+    #The shovel sprite will move with the mousepointer
     def update(self):
         self.rect.center = mouse.get_pos()
 
+#---------prints in terminal befoer game starts------------
+print ("""Your goal is to hit all of the daily tasks as college students we are trying to avoid. Have fun!""")
 
+student_name = input("What's your name, student?:")
+if student_name == "":
+    name = "Hanna Shin"
+
+#main
 pygame.init()
 
+screen = display.set_mode((640, 480))
+display.set_caption('College Student Daily Struggles')
+
+# hide the mouse cursor so we only see shovel
 mouse.set_visible(False)
 
+f = font.Font(None, 18)
+
+# create the mole and shovel using the constructors
 snowflake = Snowflake()
-clock = Clicktime()
 homework = Homework()
-stud = Student()
-sprites = RenderPlain(snowflake, stud)
+student = Student()
+# creates a group of sprites so all can be updated at once
+sprites = RenderPlain(snowflake, student)
 
-targeted = 0
-time.set_timer(USEREVENT + 1, DELAY)
+hits = 0
+timer_zone = time.set_timer(USEREVENT + 1, DELAY)
 
+#clock
+clock = pygame.time.Clock()
+
+# loop until user quits
 while True:
     e = event.poll()
     if e.type == QUIT:
         quit()
         break
 
-
     elif e.type == MOUSEBUTTONDOWN:
-        if stud.hit(target):
-            mixer.Sound("media/okay_bye.wav")
-            stud.move()
+        if student.hit(snowflake):
+            mixer.Sound("media/ohmygod.wav").play()
+            snowflake.move()
             hits += 1
 
+            # reset timer
             time.set_timer(USEREVENT + 1, DELAY)
+            
+    elif e.type == USEREVENT + 1: # TIME has passed
+        snowflake.move()
 
+    # refill background color so that we can paint sprites in new locations
+    screen.blit(backgroundimage, [0,0])
+    t = f.render("Stuck with:" + str(hits), False, (255,255,255))
+    y = f.render("Time: = " + str(clock), False, (255,255,255))
+    z = f.render('Name:' + str(student_name), False, (255,255,255))
+    screen.blit(z, (0, 0))
+    screen.blit(t, (0, 20)) 
+    screen.blit(y, (0, 40))
+         
 
+    # update and redraw sprites
+    sprites.update()
+    sprites.draw(screen)
+    display.update()
+    clock.tick(60)
+
+#----------END OF TERMINAL SHOWING SCORES WHEN GAME QUIT-------
+
+print (str(student_name) + ", you avoided a lot of daily struggles!")
+print ('You avoided' + str(hits) + 'tasks!')
+print ('END OF GAME - GET BACK TO WORK!')

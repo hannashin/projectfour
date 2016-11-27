@@ -82,17 +82,16 @@ class Homework(Sprite):
 
 
 class Student(Sprite):
-	def __init__(self):
-		Sprite.__init__(self)
-		self.image = image.load("data/student.png").convert()
-		self.rect = self.image.get_rect()
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = image.load("data/student.png").convert()
+        self.rect = self.image.get_rect()
 
-    # def target(self, target):
-    #     return self.rect.colliderect(target)
+    def target(self, target):
+        return self.rect.colliderect(target)
 
-    # #The shovel sprite will move with the mousepointer
-    # def update(self):
-    #     self.rect.center = mouse.get_pos()
+    def update(self):
+        self.rect.center = mouse.get_pos()
 
 
 init()
