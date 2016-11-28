@@ -8,7 +8,7 @@ from random import *
 DELAY = 1000;          
 
 #Colors 
-backgroundimage = pygame.image.load("media/campus.jpg")
+backgroundimage = pygame.image.load("images/campus.jpg")
 white = (255,255,255)
 black = (0,0,0)
 red = (200, 0, 0)
@@ -20,7 +20,7 @@ yellow = (255, 255, 0)
 class Snowflake(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = image.load("media/snowflake.png").convert_alpha()
+        self.image = image.load("images/snowflake.png").convert_alpha()
         self.rect = self.image.get_rect()
 
     # move gold to a new random location
@@ -32,7 +32,7 @@ class Snowflake(Sprite):
 class Homework(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = image.load("media/homework.png").convert_alpha()
+        self.image = image.load("images/homework.png").convert_alpha()
         self.rect = self.image.get_rect()
 
     # move gold to a new random location
@@ -44,7 +44,7 @@ class Homework(Sprite):
 class Eightthirty(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = image.load("media/eight_thirty.png").convert_alpha()
+        self.image = image.load("images/eight_thirty.png").convert_alpha()
         self.rect = self.image.get_rect()
 
     # move gold to a new random location
@@ -56,7 +56,7 @@ class Eightthirty(Sprite):
 class Student(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = image.load("media/student.png").convert()
+        self.image = image.load("images/student.png").convert()
         self.rect = self.image.get_rect()
         self.image.set_colorkey(black) #makes it transparent
 
@@ -70,7 +70,7 @@ class Student(Sprite):
 
 class PencilBullet(Sprite):
     def __init__(self):
-        Sprite.__init__(self, 'media/pencil.png')
+        Sprite.__init__(self, 'images/pencil.png')
         self.image=pygame.transform.scale(self.image,(8,12))
         self.width = 8
         self.height = 12
@@ -88,7 +88,7 @@ if student_name == "":
 pygame.init()
 
 #background music infinite loop
-pygame.mixer.music.load("media/run_song.wav")
+pygame.mixer.music.load("songs/run_song.wav")
 pygame.mixer.music.play(-1)
 
 screen = display.set_mode((640, 480))
@@ -125,17 +125,17 @@ while True:
 
     elif e.type == MOUSEBUTTONDOWN:
         if student.hit(snowflake):
-            mixer.Sound("media/ohmygod.wav").play()
+            mixer.Sound("songs/ohmygod.wav").play()
             snowflake.move()
             hits += 1
 
         if student.hit(homework):
-            mixer.Sound("media/okay_bye.wav").play()
+            mixer.Sound("songs/okay_bye.wav").play()
             homework.move()
             hits += 1
 
         if student.hit(eightthirty):
-            mixer.Sound("media/okay_bye.wav").play()
+            mixer.Sound("songs/okay_bye.wav").play()
             eightthirty.move()
             hits += 1
 
