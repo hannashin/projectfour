@@ -1,11 +1,11 @@
-# Han Na Shinst
+# Han Na Shin
 
 from pygame import *
 from pygame.sprite import *
 from random import *
 
 #Timer to move sprite
-DELAY = 1000;          
+DELAY = 900; #speed of the targets          
 
 #Colors 
 backgroundimage = pygame.image.load("images/campus.jpg")
@@ -91,8 +91,8 @@ pygame.init()
 pygame.mixer.music.load("songs/run_song.wav")
 pygame.mixer.music.play(-1)
 
-screen = display.set_mode((640, 480))
-display.set_caption('College Student Daily Struggles')
+screen = display.set_mode((800, 640))
+display.set_caption('College Student Daily Tasks')
 
 # hide the mouse cursor so we only see shovel
 mouse.set_visible(False)
@@ -118,16 +118,22 @@ clock = pygame.time.Clock()
 
 # loop until user quits
 while True:
-    e = event.poll()
-    if e.type == QUIT:
+    x = event.poll()
+    if x.type == QUIT:
         quit()
         break
 
-    elif e.type == MOUSEBUTTONDOWN:
+    elif x.type == MOUSEMOTION:
         if student.hit(snowflake):
             mixer.Sound("songs/ohmygod.wav").play()
             snowflake.move()
-            hits += 1
+            hits += 0
+
+    # elif x.type == MOUSEBUTTONDOWN:
+    #     if student.hit(snowflake):
+    #         mixer.Sound("songs/ohmygod.wav").play()
+    #         snowflake.move()
+    #         hits += 1
 
         if student.hit(homework):
             mixer.Sound("songs/okay_bye.wav").play()
@@ -142,7 +148,7 @@ while True:
             # reset timer
             time.set_timer(USEREVENT + 1, DELAY)
             
-    elif e.type == USEREVENT + 1: # TIME has passed
+    elif x.type == USEREVENT + 1: # TIME has passed
         snowflake.move()
         homework.move()
         eightthirty.move()
@@ -150,7 +156,7 @@ while True:
     # refill background color so that we can paint sprites in new locations
     screen.blit(backgroundimage, [0,0])
     t = f.render("Stuck with:" + str(hits), False, (255,255,255))
-    y = f.render("Time: = " + str(clock), False, (255,255,255))
+    y = f.render("Time: = " + str(clock), True, (255,255,255))
     z = f.render('Student:' + str(student_name), False, (255,255,255))
     screen.blit(z, (0, 0))
     screen.blit(t, (0, 20)) 
@@ -165,10 +171,11 @@ while True:
     sprites1.draw(screen)
     sprites2.draw(screen)
     display.update()
-    clock.tick(60)
+    clock.tick(30)
 
 #----------END OF TERMINAL SHOWING SCORES WHEN GAME QUIT-------
 
-print (str(student_name) + ", you avoided a lot of daily struggles!")
+print ("------------------------------------------")
+print (str(student_name) + ", you avoided a lot of daily tasks!")
 print ('You avoided ' + str(hits) + ' tasks!')
 print ('END OF GAME - GET BACK TO WORK!')
