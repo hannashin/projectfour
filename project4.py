@@ -1,5 +1,3 @@
-# Han Na Shin
-
 from pygame import *
 from pygame.sprite import *
 from random import *
@@ -14,8 +12,6 @@ black = (0,0,0)
 red = (200, 0, 0)
 green = (0, 200, 0)
 yellow = (255, 255, 0)   
-
-
 
 class Snowflake(Sprite):
     def __init__(self):
@@ -60,13 +56,12 @@ class Student(Sprite):
         self.rect = self.image.get_rect()
         self.image.set_colorkey(black) #makes it transparent
 
-    # Di shovel/cursor collide the gold?
     def hit(self, target):
         return self.rect.colliderect(target)
 
-    #The shovel sprite will move with the mousepointer
     def update(self):
-        self.rect.center = mouse.get_pos()
+        self.rect.center = pygame.mouse.get_pos()
+
 
 class PencilBullet(Sprite):
     def __init__(self):
@@ -86,6 +81,7 @@ if student_name == "":
 
 #main
 pygame.init()
+arrows = []
 
 #background music infinite loop
 pygame.mixer.music.load("songs/run_song.wav")
@@ -94,8 +90,7 @@ pygame.mixer.music.play(-1)
 screen = display.set_mode((800, 640))
 display.set_caption('College Student Daily Tasks')
 
-# hide the mouse cursor so we only see shovel
-mouse.set_visible(False)
+pygame.mouse.set_visible(False)
 
 f = font.Font(None, 18)
 
@@ -118,22 +113,32 @@ clock = pygame.time.Clock()
 
 # loop until user quits
 while True:
+    clock.tick(30)
     x = event.poll()
+    student.update()
     if x.type == QUIT:
         quit()
         break
 
     elif x.type == MOUSEMOTION:
+        #
         if student.hit(snowflake):
-            mixer.Sound("songs/ohmygod.wav").play()
             snowflake.move()
             hits += 0
 
-    # elif x.type == MOUSEBUTTONDOWN:
-    #     if student.hit(snowflake):
-    #         mixer.Sound("songs/ohmygod.wav").play()
-    #         snowflake.move()
-    #         hits += 1
+        if student.hit(homework):
+            homework.move()
+            hits += 0
+
+        if student.hit(eightthirty):
+            eightthirty.move()
+            hits += 0        
+
+    elif x.type == MOUSEBUTTONDOWN:
+        if student.hit(snowflake):
+            mixer.Sound("songs/ohmygod.wav").play()
+            snowflake.move()
+            hits += 1
 
         if student.hit(homework):
             mixer.Sound("songs/okay_bye.wav").play()
@@ -148,7 +153,7 @@ while True:
             # reset timer
             time.set_timer(USEREVENT + 1, DELAY)
             
-    elif x.type == USEREVENT + 1: # TIME has passed
+    elif x.type == USEREVENT: # TIME has passed
         snowflake.move()
         homework.move()
         eightthirty.move()
@@ -171,7 +176,6 @@ while True:
     sprites1.draw(screen)
     sprites2.draw(screen)
     display.update()
-    clock.tick(30)
 
 #----------END OF TERMINAL SHOWING SCORES WHEN GAME QUIT-------
 

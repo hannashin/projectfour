@@ -124,15 +124,22 @@ while True:
     elif x.type == MOUSEMOTION:
         #
         if student.hit(snowflake):
-            mixer.Sound("songs/ohmygod.wav").play()
             snowflake.move()
             hits += 0
 
-    # elif x.type == MOUSEBUTTONDOWN:
-    #     if student.hit(snowflake):
-    #         mixer.Sound("songs/ohmygod.wav").play()
-    #         snowflake.move()
-    #         hits += 1
+        if student.hit(homework):
+            homework.move()
+            hits += 0
+
+        if student.hit(eightthirty):
+            eightthirty.move()
+            hits += 0        
+
+    elif x.type == MOUSEBUTTONDOWN:
+        if student.hit(snowflake):
+            mixer.Sound("songs/ohmygod.wav").play()
+            snowflake.move()
+            hits += 1
 
         if student.hit(homework):
             mixer.Sound("songs/okay_bye.wav").play()
@@ -147,7 +154,7 @@ while True:
             # reset timer
             time.set_timer(USEREVENT + 1, DELAY)
             
-    elif x.type == USEREVENT + 1: # TIME has passed
+    elif x.type == USEREVENT: # TIME has passed
         snowflake.move()
         homework.move()
         eightthirty.move()
