@@ -3,18 +3,16 @@ from pygame.sprite import *
 from random import *
 
 #Timer to move sprite
-DELAY = 1350; #speed of the targets          
+DELAY = 1400; #speed of movement of the targets
 
 #Colors 
 backgroundimage = pygame.image.load("images/campus.jpg")
-# white = (255,255,255)
+white = (255,255,255)
 black = (0,0,0)
-# red = (200, 0, 0)
-# green = (0, 200, 0)
-# yellow = (255, 255, 0)   
+ 
 
 
-#IMAGES TO AVOID
+#-----IMAGES TO AVOID-----
 class Snowflake(Sprite):
     def __init__(self):
         Sprite.__init__(self)
@@ -50,7 +48,7 @@ class Eightthirty(Sprite):
         randY = randint(100, 600)
         self.rect.center = (randX,randY)
 
-#IMAGES TO NOT AVOID
+#------IMAGES TO NOT AVOID-----
 class Coffee(Sprite):
     def __init__(self):
         Sprite.__init__(self)
@@ -95,22 +93,22 @@ class Art(Sprite):
         randY = randint(0, 550)
         self.rect.center = (randX,randY)
 
-#STUDENT IMAGE ------
+#-----STUDENT IMAGE ------
 class Student(Sprite):
     def __init__(self):
         Sprite.__init__(self)
         self.image = image.load("images/student.png").convert()
         self.rect = self.image.get_rect()
-        self.image.set_colorkey(black) #makes it transparent
+        self.image.set_colorkey(black) #makes student transparent
 
     def hit(self, target):
         return self.rect.colliderect(target)
 
     def update(self):
-        self.rect.center = pygame.mouse.get_pos()
+        self.rect.center = pygame.mouse.get_pos() 
 
 #---------prints in terminal befoer game starts------------
-print ("""STUDENT BOOST PACK GAME : Your goal is to click on the daily tasks to get boost points (images such as firends, coffee, and an A+!) Try to avoid the snowflake, books, and 8:30 AM clock if you don't want to lose points! Have fun!""")
+print ("""STUDENT BOOST PACK GAME : Your goal is to click on the daily tasks to get boost points as the student (images such as firends, coffee, and an A+!) Try to avoid the snowflake, books, and 8:30 AM clock if you don't want to lose points! Click the screen to get the game started. Have fun!""")
 
 student_name = input("What's your name, student?:")
 if student_name == "":
@@ -240,7 +238,6 @@ while True:
     # refill background color so that we can paint sprites in new locations
     screen.blit(backgroundimage, [0,0])
     t = f.render("Boost Pack:" + str(hits), False, (255,255,255))
-    #y = f.render("Time: = " + str(clock), True, (255,255,255))
     z = f.render('Student Name:' + str(student_name), False, (255,255,255))
     screen.blit(z, (10, 10))
     screen.blit(t, (10, 50))
