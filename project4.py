@@ -3,13 +3,12 @@ from pygame.sprite import *
 from random import *
 
 #Timer to move sprite
-DELAY = 1400; #speed of movement of the targets
+DELAY = 1500; #speed of movement of the targets
 
 #Colors 
 backgroundimage = pygame.image.load("images/campus.jpg")
 white = (255,255,255)
 black = (0,0,0)
- 
 
 
 #-----IMAGES TO AVOID-----
@@ -127,7 +126,7 @@ display.set_caption('Student Boost Pack')
 
 pygame.mouse.set_visible(False)
 
-f = font.Font(None, 24)
+f = font.Font(None, 26)
 
 # constructions of the enemy images
 snowflake = Snowflake()
@@ -239,8 +238,8 @@ while True:
     screen.blit(backgroundimage, [0,0])
     t = f.render("Boost Pack:" + str(hits), False, (255,255,255))
     z = f.render('Student Name:' + str(student_name), False, (255,255,255))
-    screen.blit(z, (10, 10))
-    screen.blit(t, (10, 50))
+    screen.blit(z, (10, 15))
+    screen.blit(t, (10, 55))
          
     # update and redraw sprites for game 
     sprites.update()
